@@ -1,0 +1,31 @@
+init:
+	
+	import: imports.stdl
+	barmil: zejt
+	
+	
+test squareError method <%squareError (%c1%,%c2%)%> returns <%double%>:
+	param <%ArrayList<point>%> c1:
+		dependsOn x1,x2,y1,y2:
+			<%
+			c1=new ArrayList();
+			c1.add(new Point(%x1%,%y1%));
+			c1.add(new Point(%x2%,%y2%));
+			%>
+		out:
+			returns >= (x1+y1) - (x2-y2)	
+		invalid 0:
+			<%c1=null;%>
+		out:
+			throws <%NullReferenceException%>
+		
+	param c2(c1)
+	
+	var <%double%>  x1:
+		valid 0:
+			x1<2
+			x1>-2
+		
+	var x2(x1)
+	var y1(x1)
+	var y2(x1)

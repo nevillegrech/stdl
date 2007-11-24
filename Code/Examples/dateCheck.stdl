@@ -1,0 +1,29 @@
+init:
+	language: Pseudo
+	
+	
+test dateChecker method <%dateCheck (%day%,%month%)%> returns <%bool%>:
+	param day:
+		dependsOn month:
+			day<=[31,28,31,30,31,30,31,31,30,31,30,31][month%12-1]
+			day>=1
+		out:
+			returns == <% true %>
+		error:
+			returns == <% false %>
+		
+		
+	param month:
+		valid 0:
+			month>=1
+			month<=12
+		out:
+			returns == <% true %>
+		error:
+			returns == <% false %>
+			
+		valid 1:
+			month==2
+			month==6
+		out:
+			returns == <% true %>

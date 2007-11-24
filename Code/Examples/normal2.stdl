@@ -1,0 +1,65 @@
+init:
+	language: CS2 #Generate sources for the C#.Net 2.0 language
+	classname: frmMain #The name of the class to test
+	language_imports: System.Collections # Any imports required for the code
+	                                     # to work
+	namespace: Clustering
+	
+test squareError method <%squareError (%c1%,%c2%)%> returns <%double%>:
+# The above line represents a description of the method that we are testing
+# The method is called squareError and accepts 2 parameters c1 and c2.
+# The return type of the method is double
+	param <%ArrayList%> c1:
+	# This is a description of the c1 paramter of the method.
+	# Its type is ArrayList.
+		dependsOn x1,x2,y1,y2:
+		# This parameter depends on 4 other input paramters.
+		# These are described later on.
+			#It depends on the 4 parameters as follows:
+			<%
+			%c1%=new ArrayList();
+			%c1%.Add(new Point(%x1%,%y1%));
+			%c1%.Add(new Point(%x2%,%y2%));
+			%>
+			
+		out:
+			#The returning value should satisfy the below requirement.
+			returns >= (x1+y1) - (x2-y2)
+		invalid 0:
+			#An invalid value for this parameter:
+			c1==<%null%>
+		out:
+			# When this invalid value is fed to the method,
+			# the following exception should be thrown:
+			throws <%NullReferenceException%>
+		
+	param <%ArrayList%> c2:
+		# This parameter description is similar to the previous one,
+		# however it depends on different input paramters. 
+		dependsOn x3,x4,y3,y4:
+			<%
+			%c2%=new ArrayList();
+			%c2%.Add(new Point(%x3%,%y3%));
+			%c2%.Add(new Point(%x4%,%y4%));
+			%>
+		out:
+			returns >= (x3+y3) - (x4-y4)	
+		invalid 0:
+			c2==<%null%>
+		out:
+			throws <%NullReferenceException%>
+	
+	var <%double%>  x1:
+	# This abstract parameter has only got one equivalence class
+		valid 0:
+		# The range of this parameter will be -2 < x1 < 2
+  			x1==-2.0
+  			x1==5.0
+ 		
+  	var x2(y1) #Inherit all functionality from variable x1	
+  	var y1(x1) #Inherit all functionality from variable x1
+  	var y2(y1) #Inherit all functionality from variable x1
+  	var x3(x1) #...
+  	var x4(x1) #...
+  	var y3(x1)
+  	var y4(x1)

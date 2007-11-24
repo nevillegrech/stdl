@@ -1,0 +1,33 @@
+init:
+	language: Pseudo
+		
+test matrixSizes method <%matrixMul(%p1%,%p2%)%> returns <%double[,]%>:
+	var a:
+		valid 0:
+			a==5
+		out:
+			returns <%.length/%a%==%d% %>
+		
+	var b(a)
+	var c:
+		dependsOn b:
+			c==b
+		error:
+			returns==<%null%>
+	var d(b)
+	
+	param p1:
+		dependsOn a,b:
+			p1==<%new double[%a%,%b%]%>
+		invalid 0:
+			p1==<%null%>
+		out:
+			throws  <%NullReferenceException%>
+	
+	param p2:
+		dependsOn c,d :
+			p2==<%new double[%c%,%d%]%>
+		invalid 0:
+			p2==<%null%>
+		out:
+			throws  <%NullReferenceException%>

@@ -1,0 +1,15 @@
+init:
+	language: Pseudo
+	imports: testlib
+test s method <%asdf%>:
+	param a:
+		valid 0 (testlib.email, testlib.monkey):
+			a=="hello"
+		out:
+			assert <%pass%>
+			
+	param b:
+		valid 0 (testlib.monkey):
+			b=="hello"
+		out:
+			assert <%pass%>

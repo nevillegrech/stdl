@@ -1,0 +1,41 @@
+init:
+	language: CS2
+	classname: DateClass
+	
+	
+test dateChecker method <%dateCheck (%day%,%month%,%year%)%> returns <%bool%>:
+	var <%int%> febDay: # the number of days in february
+		dependsOn year: # depends on the year
+			febDay==29 if not(year % 400) else 28 if not (year % 100) else 29 if not (year % 4) else 28
+			
+	param <%int%> day: #the days parameter
+		dependsOn month,febDay:  #depends on the month and number of days in february
+			day<=[31,febDay,31,30,31,30,31,31,30,31,30,31][month%12-1]
+			day>=1
+		out:
+			returns == <% true %>
+		error:
+			returns == <% false %>
+		
+	param <%int%> month:
+		valid 0:
+			month>=1
+			month<=12
+		out:
+			returns == <% true %>
+		error:
+			returns == <% false %>
+			
+		valid 1:
+			month==2
+			month==8
+		out:
+			returns == <% true %>
+	
+	param <%int%> year:
+		valid 0:
+			year==2000
+			year==1900
+			year==1800
+			year==2004
+			year==2005

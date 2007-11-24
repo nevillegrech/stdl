@@ -1,0 +1,11 @@
+init:
+	language: pseudo
+	
+valid email:
+	email=="duca@waldonet.net"
+	email=="s@de.com"
+	email=="m@m.gov"
+	
+valid monkey:
+	monkey==4
+	monkey==6
