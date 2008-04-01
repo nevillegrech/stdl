@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using EnvDTE;
 using EnvDTE80;
 
@@ -19,29 +18,25 @@ namespace STDL.Code
 
         public void CreateFile()
         {
-            CreateSTDLFolder();
+            ProjectItem folder = CreateSTDLFolder();
             string projectPath = _applicationObject.ActiveDocument.Path;
             string filename = Path.Combine(Path.Combine(projectPath, _folder), _clazz.ClassName + ".stdl");
-            string tmpFilename = Path.Combine(projectPath, DateTime.Now.Ticks + ".stdl");
 
-            GenerateTemporaryFile(tmpFilename);
-
-            ProjectItem item = _applicationObject.ItemOperations.AddExistingItem(tmpFilename);
-            Window window = item.Open(Constants.vsViewKindTextView);
-            item.SaveAs(filename);
-            window.Activate();
-            File.Delete(tmpFilename);
+            GenerateFile(filename);
             
+            ProjectItem item = folder.ProjectItems.AddFromFile(filename);
             _applicationObject.ActiveDocument.ProjectItem.ContainingProject.Save(_applicationObject.ActiveDocument.ProjectItem.ContainingProject.FullName);
+            Window window = item.Open(Constants.vsViewKindTextView);
+            window.Activate();
         }
 
-        private void GenerateTemporaryFile(string tmpFilename)
+        private void GenerateFile(string filename)
         {
-            if (File.Exists(tmpFilename))
+            if (File.Exists(filename))
             {
-                File.Delete(tmpFilename);
+                File.Delete(filename);
             }
-            StreamWriter stream = File.CreateText(tmpFilename);
+            StreamWriter stream = File.CreateText(filename);
 
             stream.Write(_clazz.ToString());
             
@@ -49,17 +44,16 @@ namespace STDL.Code
             stream.Close();
         }
 
-        private void CreateSTDLFolder()
+        private ProjectItem CreateSTDLFolder()
         {
-            try
+            foreach (ProjectItem projectItem in _applicationObject.ActiveDocument.ProjectItem.ContainingProject.ProjectItems)
             {
-                _applicationObject.ActiveDocument.ProjectItem.ContainingProject.ProjectItems.AddFolder(_folder, "");
-            }
-            catch
-            {
-                //Folder already exists
-                return;
-            }
+                if(_folder.Equals(projectItem.Name))
+                {
+                    return projectItem;
+                }
+            };
+            return _applicationObject.ActiveDocument.ProjectItem.ContainingProject.ProjectItems.AddFolder(_folder, "");
         }
     }
 }
