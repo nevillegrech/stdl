@@ -2,7 +2,7 @@
 
 namespace STDL
 {
-    class Events
+    class AddIn
     {
         public static void CompileOnBuild(ProjectItem item)
         {

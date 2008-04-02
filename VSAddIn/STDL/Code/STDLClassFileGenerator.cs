@@ -29,7 +29,7 @@ namespace STDL.Code
             ProjectItem item = folder.ProjectItems.AddFromFile(filename);
             Window window = item.Open(Constants.vsViewKindTextView);
 
-            Events.CompileOnBuild(item);
+            AddIn.CompileOnBuild(item);
 
             _applicationObject.ActiveDocument.ProjectItem.ContainingProject.Save(_applicationObject.ActiveDocument.ProjectItem.ContainingProject.FullName);
             window.Activate();
