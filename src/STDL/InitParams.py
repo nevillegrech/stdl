@@ -20,7 +20,15 @@ class InitParams(ParsedElement):
             raise exceptionClass("%s required but not found"%(str(lackingParams)))
         for dp in self.delimitedParams:
             if dp in params:
-                params[dp]=[value.strip() for value in params[dp].split(",")] #Split and format delimited parameter
+                params[dp]=params[dp].split(",") #Split and format delimited parameter
+        for k,v in params.iteritems():
+            if isinstance(v, basestring):
+                params[k]=v.strip() 
+            elif isinstance(v,list):
+                params[k]=[i.strip() for i in v]
+            else:
+                raise ValueError('parameter has to be string or list')
+                
         self.params=params
     
     def getInitParams(self):

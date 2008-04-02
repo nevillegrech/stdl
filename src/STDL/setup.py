@@ -3,4 +3,4 @@ import py2exe
 
 setup(console=['Main.py'],
       options = {"py2exe": {"packages": ["Coders"],
-                            "dist_dir": '..\\STDL\\Bin'}})
+                            "dist_dir": '..\\..\\bin\\stdl'}})

@@ -18,7 +18,7 @@ class PartitionCheckItem(ParsedElement):
         if not self.containsExternalCode:
             #evaluate python code
             try:
-                compiledExpression=compile(self.code,'<output-check>','eval')
+                compiledExpression=compile(self.code.strip(),'<output-check>','eval')
                 value=eval(compiledExpression,testCaseValues)
             except Exception:
                 raise SyntaxSemanticException("Invalid Syntax in %s"%(self.code))
