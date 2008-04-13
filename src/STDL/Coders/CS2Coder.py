@@ -123,7 +123,7 @@ class CS2Coder(ICoder):
         except KeyError, ke:
             raise SemanticException('Missing input %s\nIn test header declaration of method %s'%(str(ke),method))            
         #launch method here
-        if returns.strip()!='void':
+        if returns is not None and returns.strip()!='void':
             code.append('      %s returns=this.%s.%s;\n'%(returns,self.mockObjectName,method))
         else:
             code.append('      this.%s.%s;\n'%(self.mockObjectName,method))
